@@ -14,6 +14,9 @@ const renderUserList = () => {
   });
 };
 
+
+
+ let editForm;
 let data = [];
 const form = document.querySelector("form");
 const submitBtn = document.querySelector("#submit-btn");
@@ -61,23 +64,27 @@ userList.addEventListener("click", (event) => {
  <input id="description-edit" type="text" value="${data[index].description}">
    <button type="submit" class="save-btn">Save</button></form>
  `;
-    const editForm = document.querySelector("#edit-form");
+ editForm = document.querySelector("#edit-form");
     const titleEdit = document.querySelector("#title-edit");
     const descriptionEdit = document.querySelector("#description-edit");
     const saveBtn = document.querySelector(".save-btn");
-    editForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      editButtons.forEach((button) => {
-        button.removeAttribute("disabled");
-      });
-      const updatedUser = {
-        id: userId,
-        title: titleEdit.value,
-        description: descriptionEdit.value,
-      };
-      data[index] = updatedUser;
-      renderUserList();
-      editForm.remove();
-    });
-  }
+function saveChanges(event) {
+  editButtons.forEach((button) => {
+    button.removeAttribute("disabled");
+  });
+  const updatedUser = {
+    id: userId,
+    title: titleEdit.value,
+    description: descriptionEdit.value,
+  };
+  data[index] = updatedUser;
+  renderUserList();
+  editForm.style.display='none';
+
+  editForm.removeEventListener('submit', (saveChanges));
+}
+
+editForm.addEventListener("submit", (saveChanges));
+
+}
 });
